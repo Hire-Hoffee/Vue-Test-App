@@ -37,7 +37,7 @@ function handleTextSelection() {
     }
 
     const foundWord = wordsCount.value.find((obj) => obj.word === word);
-    if (foundWord && foundWord.count > 0) {
+    if (foundWord && foundWord.count > 0 && !existingNode.className) {
       selectedWords.value.push(word);
       foundWord.count--;
     }

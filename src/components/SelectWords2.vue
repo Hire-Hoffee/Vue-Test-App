@@ -24,7 +24,7 @@ function countWords(text: string[]) {
   return wordsList;
 }
 
-function handleTextSelection(e: PointerEvent) {
+function handleTextSelection(e: MouseEvent) {
   const target = e.target as HTMLElement;
   const foundWord = wordsCount.value.find((obj) => obj.word === target.textContent);
 
