@@ -5,14 +5,28 @@ const { rawText } = defineProps<{
   rawText: string
 }>();
 
-const text = ref<string>("");
-const selectedWords = ref<string[]>([]);
+const splitText = rawText.split(/(\b\w+\b|\s+|[^\s\w])/gi).filter(Boolean);
 
-text.value = rawText;
+const text = ref<string>(rawText);
+const selectedWords = ref<string[]>([]);
+const wordsCount = ref<{ word: string, count: number }[]>([]);
+
+wordsCount.value = countWords(splitText);
+
+function countWords(text: string[]) {
+  const wordsList: { word: string, count: number }[] = [];
+
+  text.forEach((item) => {
+    const foundWord = wordsList.find(obj => obj.word === item);
+    foundWord ? foundWord.count++ : wordsList.push({ word: item, count: 1 });
+  })
+
+  return wordsList;
+}
 
 function handleTextSelection() {
   const range = window.getSelection()!.getRangeAt(0);
-
+  const existingNode = window.getSelection()!.anchorNode?.parentNode as HTMLElement;
   const regEx = new RegExp(/(\b\w+\b|\s+|[^\s\w])/, 'gi');
   const parsedRawText = rawText.split(regEx).filter(Boolean);
   const parsedWords = range.toString().split(regEx).filter(Boolean);
@@ -21,8 +35,16 @@ function handleTextSelection() {
     if (word.match(/\W/) || !parsedRawText.includes(word)) {
       return document.createTextNode(word);
     }
-    // Посчитать количество одинаковых слов изначальном тексте
-    !selectedWords.value.includes(word) && selectedWords.value.push(word)
+
+    const foundWord = wordsCount.value.find((obj) => obj.word === word);
+    if (foundWord && foundWord.count > 0) {
+      selectedWords.value.push(word);
+      foundWord.count--;
+    }
+
+    if (existingNode.className) {
+      existingNode.remove();
+    }
 
     const node = document.createTextNode(word);
     const span = document.createElement("span");
@@ -41,8 +63,10 @@ function handleTextSelection() {
 async function handleResetSelection() {
   text.value = "";
   await nextTick();
+
   text.value = rawText;
   selectedWords.value = [];
+  wordsCount.value = countWords(splitText);
 }
 </script>
 
@@ -75,8 +99,13 @@ async function handleResetSelection() {
   background-color: #D870D8;
 }
 
+.wordsContainer :deep(.selectedWord)::selection {
+  background-color: #8b478b;
+}
+
 .wordsContainer :deep(.selectedWord) {
   background-color: #D870D8;
+  color: #fff;
   border-radius: 5px;
   padding: 1px 3px;
   font-size: 16.5px;
