@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick } from "vue";
+import { ref, nextTick, toValue } from "vue";
 
 const { rawText } = defineProps<{
   rawText: string
@@ -9,9 +9,7 @@ const splitText = rawText.split(/(\b\w+\b|\s+|[^\s\w])/gi).filter(Boolean);
 
 const text = ref<string[]>(splitText);
 const selectedWords = ref<(string | null)[]>([]);
-const wordsCount = ref<{ word: string, count: number }[]>([]);
-
-wordsCount.value = countWords(splitText);
+const wordsCount = ref<{ word: string, count: number }[]>(toValue(countWords(splitText)));
 
 function countWords(text: string[]) {
   const wordsList: { word: string, count: number }[] = [];
