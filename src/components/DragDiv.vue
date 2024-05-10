@@ -11,7 +11,8 @@ const pos = ref({
 
 function handleMouseDown(e: MouseEvent) {
   const node = e.target as HTMLElement;
-  const rect = node.getBoundingClientRect();
+  const elem = node.tagName === "DIV" ? node : node.parentElement;
+  const rect = elem!.getBoundingClientRect();
   const x = e.clientX - rect.left + window.scrollX;
   const y = e.clientY - rect.top + window.scrollY;
 
