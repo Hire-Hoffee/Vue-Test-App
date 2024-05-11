@@ -5,7 +5,7 @@ import DragDiv from "./components/DragDiv.vue";
 import FixedDataSizeScroll from "./components/FixedDataSizeScroll.vue";
 import SelectWords1 from "./components/SelectWords1.vue";
 import SelectWords2 from "./components/SelectWords2.vue";
-import FancyDivAnimation from "./components/FancyDivAnimation.vue";
+import FancyAnimation from "./components/FancyAnimation.vue";
 
 import { data, text } from "./utils/data.ts"
 </script>
@@ -22,7 +22,7 @@ import { data, text } from "./utils/data.ts"
     <SelectWords2 :raw-text="text" />
   </div>
 
-  <FancyDivAnimation />
+  <FancyAnimation />
 
   <TestingStuff :raw-text="text" />
 </template>
