@@ -49,7 +49,7 @@ async function handleResetSelection() {
 
     <p>
       <span v-for="(word, idx) in text" :key="idx"
-        @click="(e: PointerEvent) => !word?.match(/\W/) && handleTextSelection(e)" :class="!word.match(/\W/) && 'word'">
+        @click="(e: MouseEvent) => !word?.match(/\W/) && handleTextSelection(e)" :class="!word.match(/\W/) && 'word'">
         {{ word }}
       </span>
     </p>
@@ -57,7 +57,7 @@ async function handleResetSelection() {
 
     <h4 v-if="selectedWords.length" style="text-align: center;">Selected words</h4>
     <ul>
-      <li v-for="word in selectedWords" :key="word">
+      <li v-for="word in selectedWords" :key="word!">
         {{ word }}
       </li>
     </ul>
