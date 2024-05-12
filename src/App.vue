@@ -1,34 +1,34 @@
 <script setup lang="ts">
-import TestingStuff from "./components/TestingStuff.vue";
 
-import DragDiv from "./components/DragDiv.vue";
-import FixedDataSizeScroll from "./components/FixedDataSizeScroll.vue";
-import SelectWords1 from "./components/SelectWords1.vue";
-import SelectWords2 from "./components/SelectWords2.vue";
-import FancyAnimation from "./components/FancyAnimation.vue";
-
-import { data, text } from "./utils/data.ts"
 </script>
 
 <template>
-  <DragDiv>
-    <h3>Draggable div</h3>
-  </DragDiv>
+  <h1>An application to test some frontend features that I found interesting using the Vue framework</h1>
 
-  <FixedDataSizeScroll :data="data" :start='0' :end="10" :gap="10" />
+  <nav class="navigation">
+    <RouterLink to="/done">Done projects</RouterLink>
+    <RouterLink to="/testing">Testing stuff</RouterLink>
+  </nav>
 
-  <div class="wordsSelection">
-    <SelectWords1 :raw-text="text" />
-    <SelectWords2 :raw-text="text" />
-  </div>
-
-  <FancyAnimation />
-
-  <TestingStuff :raw-text="text" />
+  <main>
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>
-.wordsSelection {
+h1 {
+  text-align: center;
+  margin: 10px 10px 20px 10px;
+}
+
+nav {
   display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+main {
+  position: relative;
+  margin-top: 20px;
 }
 </style>
