@@ -11,10 +11,27 @@ const pos = ref({
 
 function handleMouseDown(e: MouseEvent) {
   const node = e.target as HTMLElement;
+
+  function findFirstParent(node: HTMLElement) {
+    let foundNode = node;
+    let breakLoop = false;
+
+    while (!breakLoop && foundNode.tagName !== "MAIN") {
+      if (foundNode.parentElement) {
+        foundNode = foundNode.parentElement;
+      } else {
+        breakLoop = true;
+      }
+    }
+
+    return foundNode;
+  }
+
   const elem = node.tagName === "DIV" ? node : node.parentElement;
   const rect = elem!.getBoundingClientRect();
-  const x = e.clientX - rect.left + window.scrollX;
-  const y = e.clientY - rect.top + window.scrollY;
+  const firstParent = findFirstParent(node).getBoundingClientRect();
+  const x = e.clientX - rect.left + window.scrollX + firstParent.left;
+  const y = e.clientY - rect.top + window.scrollY + firstParent.top;
 
   pos.value = { ...pos.value, xLoc: x, yLoc: y };
   isDragging.value = true;

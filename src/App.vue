@@ -12,7 +12,7 @@ onMounted(() => {
 <template>
   <h1>An application to test some frontend features that I found interesting using the Vue framework</h1>
 
-  <nav class="navigation">
+  <nav>
     <RouterLink to="/done">Done projects</RouterLink>
     <RouterLink to="/testing">Testing stuff</RouterLink>
   </nav>
