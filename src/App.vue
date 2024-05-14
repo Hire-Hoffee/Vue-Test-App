@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 
 const router = useRouter();
+const route = useRoute();
 
 onMounted(() => {
-  router.push('/done');
+  if (route.path === '/') {
+    router.push('/done');
+  }
 });
 </script>
 
